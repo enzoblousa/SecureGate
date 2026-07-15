@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging.Abstractions;
 using SecureGate.Api.Controllers;
 using SecureGate.Api.Controllers.Contracts;
 using SecureGate.Application.Auth;
@@ -16,7 +17,8 @@ public class AuthControllerTests
     {
         repository = new FakeUserRepository();
         hasher = new FakePasswordHasher();
-        var registerService = new RegisterUserService(repository, hasher);
+        var registerService = new RegisterUserService(
+            repository, hasher, new FakeEventPublisher(), NullLogger<RegisterUserService>.Instance);
         var loginService = new LoginService(repository, hasher, new FakeTokenGenerator());
         return new AuthController(registerService, loginService);
     }

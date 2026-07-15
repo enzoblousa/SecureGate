@@ -1,5 +1,7 @@
+using Microsoft.Extensions.Logging;
 using SecureGate.Application.Abstractions;
 using SecureGate.Application.Auth.Dtos;
+using SecureGate.Application.Events;
 using SecureGate.Domain.Entities;
 
 namespace SecureGate.Application.Auth;
@@ -10,11 +12,19 @@ public sealed class RegisterUserService
 
     private readonly IUserRepository _userRepository;
     private readonly IPasswordHasher _passwordHasher;
+    private readonly IEventPublisher _eventPublisher;
+    private readonly ILogger<RegisterUserService> _logger;
 
-    public RegisterUserService(IUserRepository userRepository, IPasswordHasher passwordHasher)
+    public RegisterUserService(
+        IUserRepository userRepository,
+        IPasswordHasher passwordHasher,
+        IEventPublisher eventPublisher,
+        ILogger<RegisterUserService> logger)
     {
         _userRepository = userRepository;
         _passwordHasher = passwordHasher;
+        _eventPublisher = eventPublisher;
+        _logger = logger;
     }
 
     public async Task<RegisterUserResult> RegisterAsync(RegisterUserRequest request, CancellationToken cancellationToken = default)
@@ -30,6 +40,21 @@ public sealed class RegisterUserService
 
         await _userRepository.AddAsync(user, cancellationToken);
 
+        await PublishUserRegisteredEventAsync(user, cancellationToken);
+
         return new RegisterUserResult(user.Id, user.Name, user.Email, user.CreatedAt);
+    }
+
+    private async Task PublishUserRegisteredEventAsync(User user, CancellationToken cancellationToken)
+    {
+        try
+        {
+            var @event = new UserRegisteredEvent(user.Id, user.Name, user.Email, user.CreatedAt);
+            await _eventPublisher.PublishAsync(@event, cancellationToken);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Falha ao publicar UserRegisteredEvent para o usuário {UserId}", user.Id);
+        }
     }
 }
