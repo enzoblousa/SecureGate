@@ -97,15 +97,15 @@ public sealed record UserRegisteredEvent(Guid UserId, string Name, string Email,
 
 ## Critérios de aceite
 
-- [ ] `POST /api/auth/register` com dados válidos, além de persistir o usuário e
+- [x] `POST /api/auth/register` com dados válidos, além de persistir o usuário e
       retornar 201, publica um `UserRegisteredEvent` no RabbitMQ.
-- [ ] O consumer processa o evento publicado e loga
+- [x] O consumer processa o evento publicado e loga
       "e-mail de boas-vindas enviado para {email}" com o e-mail correto.
-- [ ] Uma falha simulada na publicação do evento não impede o `RegisterUserService` de
+- [x] Uma falha simulada na publicação do evento não impede o `RegisterUserService` de
       retornar o resultado do registro (o erro é logado, não propagado).
-- [ ] Teste automatizado (test harness do MassTransit) cobrindo: evento publicado é
+- [x] Teste automatizado (test harness do MassTransit) cobrindo: evento publicado é
       consumido e o consumer loga a mensagem esperada.
-- [ ] Teste automatizado cobrindo: `RegisterUserService` publica o evento correto após
+- [x] Teste automatizado cobrindo: `RegisterUserService` publica o evento correto após
       um registro bem-sucedido.
-- [ ] Smoke test manual via `docker compose up`: registrar um usuário e confirmar nos
+- [x] Smoke test manual via `docker compose up`: registrar um usuário e confirmar nos
       logs do container da API a mensagem de log do consumer.
