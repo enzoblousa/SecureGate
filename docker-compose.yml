@@ -23,6 +23,7 @@ services:
       - "8080:8080"
     environment:
       ConnectionStrings__Default: "Host=postgres;Port=5432;Database=securegate;Username=postgres;Password=postgres"
+      Jwt__Secret: "dev-only-secret-do-not-use-in-production-change-me-1234567890"
     depends_on:
       postgres:
         condition: service_healthy

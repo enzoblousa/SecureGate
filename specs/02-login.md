@@ -97,14 +97,14 @@ mensagem idêntica nos dois casos):
 
 ## Critérios de aceite
 
-- [ ] `POST /api/auth/login` com e-mail e senha corretos retorna 200 com um JWT válido
+- [x] `POST /api/auth/login` com e-mail e senha corretos retorna 200 com um JWT válido
       (assinatura, issuer, audience e `exp` corretos) e o campo `expiresAt`.
-- [ ] Login com e-mail inexistente retorna 401 com a mensagem genérica.
-- [ ] Login com senha incorreta retorna 401 com a mesma mensagem genérica do e-mail
+- [x] Login com e-mail inexistente retorna 401 com a mensagem genérica.
+- [x] Login com senha incorreta retorna 401 com a mesma mensagem genérica do e-mail
       inexistente (resposta idêntica nos dois casos).
-- [ ] Login com e-mail em formato inválido ou campos vazios retorna 400.
-- [ ] O token gerado contém as claims `sub` (Id do usuário), `email` e `name`.
-- [ ] Teste automatizado cobrindo: login com sucesso gera um token decodificável com
+- [x] Login com e-mail em formato inválido ou campos vazios retorna 400.
+- [x] O token gerado contém as claims `sub` (Id do usuário), `email` e `name`.
+- [x] Teste automatizado cobrindo: login com sucesso gera um token decodificável com
       os claims esperados.
-- [ ] Teste automatizado cobrindo: login com senha incorreta e login com e-mail
+- [x] Teste automatizado cobrindo: login com senha incorreta e login com e-mail
       inexistente retornam a mesma resposta (401 genérico).
