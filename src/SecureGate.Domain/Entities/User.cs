@@ -34,10 +34,10 @@ public sealed class User
     {
         var trimmed = name?.Trim();
         if (string.IsNullOrEmpty(trimmed))
-            throw new ArgumentException("O nome é obrigatório.", nameof(name));
+            throw new ArgumentException("O nome é obrigatório.");
 
         if (trimmed.Length < 2 || trimmed.Length > 100)
-            throw new ArgumentException("O nome deve ter entre 2 e 100 caracteres.", nameof(name));
+            throw new ArgumentException("O nome deve ter entre 2 e 100 caracteres.");
 
         return trimmed;
     }
@@ -46,10 +46,10 @@ public sealed class User
     {
         var trimmed = email?.Trim();
         if (string.IsNullOrEmpty(trimmed))
-            throw new ArgumentException("O e-mail é obrigatório.", nameof(email));
+            throw new ArgumentException("O e-mail é obrigatório.");
 
         if (!IsValidEmailFormat(trimmed))
-            throw new ArgumentException("O e-mail informado é inválido.", nameof(email));
+            throw new ArgumentException("O e-mail informado é inválido.");
 
         return trimmed;
     }
@@ -69,7 +69,7 @@ public sealed class User
     private static string ValidatePasswordHash(string passwordHash)
     {
         if (string.IsNullOrWhiteSpace(passwordHash))
-            throw new ArgumentException("O hash de senha é obrigatório.", nameof(passwordHash));
+            throw new ArgumentException("O hash de senha é obrigatório.");
 
         return passwordHash;
     }

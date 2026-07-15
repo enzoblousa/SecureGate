@@ -20,7 +20,7 @@ public sealed class RegisterUserService
     public async Task<RegisterUserResult> RegisterAsync(RegisterUserRequest request, CancellationToken cancellationToken = default)
     {
         if (string.IsNullOrEmpty(request.Password) || request.Password.Length < MinimumPasswordLength)
-            throw new ArgumentException($"A senha deve ter no mínimo {MinimumPasswordLength} caracteres.", nameof(request.Password));
+            throw new ArgumentException($"A senha deve ter no mínimo {MinimumPasswordLength} caracteres.");
 
         var passwordHash = _passwordHasher.Hash(request.Password);
         var user = new User(request.Name, request.Email, passwordHash);
