@@ -1,0 +1,65 @@
+using System.Net.Mail;
+
+namespace SecureGate.Domain.Entities;
+
+public sealed class User
+{
+    public Guid Id { get; }
+    public string Name { get; }
+    public string Email { get; }
+    public string PasswordHash { get; }
+    public DateTime CreatedAt { get; }
+
+    public User(string name, string email, string passwordHash)
+    {
+        Name = ValidateName(name);
+        Email = ValidateEmail(email);
+        PasswordHash = ValidatePasswordHash(passwordHash);
+        Id = Guid.NewGuid();
+        CreatedAt = DateTime.UtcNow;
+    }
+
+    private static string ValidateName(string name)
+    {
+        var trimmed = name?.Trim();
+        if (string.IsNullOrEmpty(trimmed))
+            throw new ArgumentException("O nome é obrigatório.", nameof(name));
+
+        if (trimmed.Length < 2 || trimmed.Length > 100)
+            throw new ArgumentException("O nome deve ter entre 2 e 100 caracteres.", nameof(name));
+
+        return trimmed;
+    }
+
+    private static string ValidateEmail(string email)
+    {
+        var trimmed = email?.Trim();
+        if (string.IsNullOrEmpty(trimmed))
+            throw new ArgumentException("O e-mail é obrigatório.", nameof(email));
+
+        if (!IsValidEmailFormat(trimmed))
+            throw new ArgumentException("O e-mail informado é inválido.", nameof(email));
+
+        return trimmed;
+    }
+
+    private static bool IsValidEmailFormat(string email)
+    {
+        try
+        {
+            return new MailAddress(email).Address == email;
+        }
+        catch (FormatException)
+        {
+            return false;
+        }
+    }
+
+    private static string ValidatePasswordHash(string passwordHash)
+    {
+        if (string.IsNullOrWhiteSpace(passwordHash))
+            throw new ArgumentException("O hash de senha é obrigatório.", nameof(passwordHash));
+
+        return passwordHash;
+    }
+}
