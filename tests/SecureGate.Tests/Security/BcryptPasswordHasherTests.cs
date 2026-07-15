@@ -35,4 +35,22 @@ public class BcryptPasswordHasherTests
 
         Assert.NotEqual(hash1, hash2);
     }
+
+    [Fact]
+    public void Verify_WithMatchingPassword_ReturnsTrue()
+    {
+        var hasher = new BcryptPasswordHasher();
+        var hash = hasher.Hash("senha1234");
+
+        Assert.True(hasher.Verify("senha1234", hash));
+    }
+
+    [Fact]
+    public void Verify_WithWrongPassword_ReturnsFalse()
+    {
+        var hasher = new BcryptPasswordHasher();
+        var hash = hasher.Hash("senha1234");
+
+        Assert.False(hasher.Verify("outrasenha", hash));
+    }
 }
