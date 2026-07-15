@@ -83,10 +83,10 @@ inválido, campos vazios):
 
 ## Critérios de aceite
 
-- [ ] `POST /api/auth/register` com dados válidos persiste o usuário no PostgreSQL e
+- [x] `POST /api/auth/register` com dados válidos persiste o usuário no PostgreSQL e
       retorna 201 com os dados do usuário (sem senha/hash).
-- [ ] Registrar com e-mail já existente retorna 409 e não duplica o registro.
-- [ ] Registrar com senha menor que 8 caracteres retorna 400.
-- [ ] Registrar com e-mail em formato inválido retorna 400.
-- [ ] A senha nunca aparece em texto puro na resposta, no banco ou em logs.
-- [ ] Teste automatizado cobrindo: registro com sucesso cria o usuário no banco.
+- [x] Registrar com e-mail já existente retorna 409 e não duplica o registro.
+- [x] Registrar com senha menor que 8 caracteres retorna 400.
+- [x] Registrar com e-mail em formato inválido retorna 400.
+- [x] A senha nunca aparece em texto puro na resposta, no banco ou em logs.
+- [x] Teste automatizado cobrindo: registro com sucesso cria o usuário no banco.
