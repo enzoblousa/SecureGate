@@ -19,6 +19,17 @@ public sealed class User
         CreatedAt = DateTime.UtcNow;
     }
 
+    // Reservado para o EF Core materializar entidades vindas do banco via
+    // acesso direto aos backing fields, sem repassar pelas validações acima.
+    private User()
+    {
+        Id = Guid.Empty;
+        Name = string.Empty;
+        Email = string.Empty;
+        PasswordHash = string.Empty;
+        CreatedAt = default;
+    }
+
     private static string ValidateName(string name)
     {
         var trimmed = name?.Trim();
