@@ -1,0 +1,50 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{FA0A581A-7631-437B-82C7-C91D664CD638}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecureGate.Domain", "src\SecureGate.Domain\SecureGate.Domain.csproj", "{780E56FE-A5E5-4D6A-BDA6-5D1E44F9F579}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecureGate.Application", "src\SecureGate.Application\SecureGate.Application.csproj", "{C5BD04E2-7650-4631-BD4C-B9AC0CB40E51}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecureGate.Api", "src\SecureGate.Api\SecureGate.Api.csproj", "{98A75845-EC05-46A9-AC5F-0C30E9AB1C6C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{F0A788CD-C060-4FE0-8683-98DE446B56A4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecureGate.Tests", "tests\SecureGate.Tests\SecureGate.Tests.csproj", "{EC18370D-F5FA-4644-B405-3909E243634D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{780E56FE-A5E5-4D6A-BDA6-5D1E44F9F579}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{780E56FE-A5E5-4D6A-BDA6-5D1E44F9F579}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{780E56FE-A5E5-4D6A-BDA6-5D1E44F9F579}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{780E56FE-A5E5-4D6A-BDA6-5D1E44F9F579}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C5BD04E2-7650-4631-BD4C-B9AC0CB40E51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5BD04E2-7650-4631-BD4C-B9AC0CB40E51}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5BD04E2-7650-4631-BD4C-B9AC0CB40E51}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5BD04E2-7650-4631-BD4C-B9AC0CB40E51}.Release|Any CPU.Build.0 = Release|Any CPU
+		{98A75845-EC05-46A9-AC5F-0C30E9AB1C6C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98A75845-EC05-46A9-AC5F-0C30E9AB1C6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98A75845-EC05-46A9-AC5F-0C30E9AB1C6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{98A75845-EC05-46A9-AC5F-0C30E9AB1C6C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC18370D-F5FA-4644-B405-3909E243634D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC18370D-F5FA-4644-B405-3909E243634D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC18370D-F5FA-4644-B405-3909E243634D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC18370D-F5FA-4644-B405-3909E243634D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{780E56FE-A5E5-4D6A-BDA6-5D1E44F9F579} = {FA0A581A-7631-437B-82C7-C91D664CD638}
+		{C5BD04E2-7650-4631-BD4C-B9AC0CB40E51} = {FA0A581A-7631-437B-82C7-C91D664CD638}
+		{98A75845-EC05-46A9-AC5F-0C30E9AB1C6C} = {FA0A581A-7631-437B-82C7-C91D664CD638}
+		{EC18370D-F5FA-4644-B405-3909E243634D} = {F0A788CD-C060-4FE0-8683-98DE446B56A4}
+	EndGlobalSection
+EndGlobal
