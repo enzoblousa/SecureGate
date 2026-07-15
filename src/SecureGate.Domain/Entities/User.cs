@@ -1,4 +1,4 @@
-using System.Net.Mail;
+using SecureGate.Domain;
 
 namespace SecureGate.Domain.Entities;
 
@@ -48,22 +48,10 @@ public sealed class User
         if (string.IsNullOrEmpty(trimmed))
             throw new ArgumentException("O e-mail é obrigatório.");
 
-        if (!IsValidEmailFormat(trimmed))
+        if (!EmailValidator.IsValidFormat(trimmed))
             throw new ArgumentException("O e-mail informado é inválido.");
 
         return trimmed;
-    }
-
-    private static bool IsValidEmailFormat(string email)
-    {
-        try
-        {
-            return new MailAddress(email).Address == email;
-        }
-        catch (FormatException)
-        {
-            return false;
-        }
     }
 
     private static string ValidatePasswordHash(string passwordHash)
