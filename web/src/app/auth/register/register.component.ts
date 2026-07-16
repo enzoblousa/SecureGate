@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
@@ -28,6 +28,11 @@ import { ApiError, ApiValidationError } from '../models/auth.models';
   styleUrl: './register.component.scss',
 })
 export class RegisterComponent {
+  private readonly formBuilder = inject(FormBuilder);
+  private readonly authService = inject(AuthService);
+  private readonly router = inject(Router);
+  private readonly snackBar = inject(MatSnackBar);
+
   submitting = false;
 
   form = this.formBuilder.group({
@@ -35,13 +40,6 @@ export class RegisterComponent {
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(8)]],
   });
-
-  constructor(
-    private readonly formBuilder: FormBuilder,
-    private readonly authService: AuthService,
-    private readonly router: Router,
-    private readonly snackBar: MatSnackBar,
-  ) {}
 
   submit(): void {
     if (this.form.invalid) {

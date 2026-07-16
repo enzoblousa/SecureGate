@@ -1,0 +1,14 @@
+<mat-toolbar color="primary">
+  <span>SecureGate</span>
+  <span class="spacer"></span>
+  <button mat-button (click)="logout()">Sair</button>
+</mat-toolbar>
+
+<div class="content">
+  @if (user) {
+    <h1>Bem-vindo, {{ user.name }}!</h1>
+    <p>{{ user.email }}</p>
+  } @else {
+    <p>Sessão não encontrada.</p>
+  }
+</div>
