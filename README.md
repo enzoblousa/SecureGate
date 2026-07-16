@@ -27,6 +27,7 @@ docker compose up -d --build
 - API: `http://localhost:8080`
 - RabbitMQ management UI: `http://localhost:15672` (usuário/senha: `guest`/`guest`)
 - Postgres: `localhost:5432` (usuário/senha: `postgres`/`postgres`)
+- smtp4dev (emails capturados): `http://localhost:5000`
 
 > A API sobe em modo `Production` nesse caminho, então o Swagger **não** fica
 > disponível — use a Opção B para isso.
@@ -94,5 +95,6 @@ npm test
 | `dotnet run --project src/SecureGate.Api` | Roda a API local com Swagger |
 | `dotnet test` | Roda os testes do backend |
 | `docker compose down` | Para os containers |
+| `docker compose logs -f smtp4dev` | Ver logs do smtp4dev (captura de e-mail) |
 | `cd web && npm start` | Roda o frontend Angular em `localhost:4200` |
 | `cd web && npm test` | Roda os testes do frontend |
