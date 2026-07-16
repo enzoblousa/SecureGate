@@ -3,6 +3,9 @@ bin/
 obj/
 *.user
 
+## Docker Compose local overrides (contém segredos, nunca comitar)
+docker-compose.override.yml
+
 ## IDE
 .vs/
 .vscode/

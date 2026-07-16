@@ -122,6 +122,13 @@ Abra `http://localhost:5000` — o e-mail "Bem-vindo(a) ao SecureGate" enviado p
 endereço registrado deve aparecer na lista, capturado via SMTP real (nenhum e-mail sai
 para a internet, tudo fica local).
 
+**Quer receber de verdade no seu e-mail (ex.: Gmail) em vez do smtp4dev?** Copie
+`docker-compose.override.yml.example` para `docker-compose.override.yml` (já está no
+`.gitignore` — nunca comite esse arquivo) e preencha com uma
+[senha de app do Gmail](https://myaccount.google.com/apppasswords) (exige verificação
+em duas etapas ativada). Depois rode `docker compose up -d --build` normalmente; o
+Compose mescla o override automaticamente.
+
 ### 3.5 Conferir o evento no RabbitMQ
 
 Abra `http://localhost:15672` (usuário/senha `guest`/`guest`) → aba **Queues** → fila

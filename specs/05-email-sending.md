@@ -94,14 +94,29 @@ smtp4dev na seção "Opção A".
   usuário via `POST /api/auth/register`, e conferir o email na UI do smtp4dev
   (`http://localhost:5000`).
 
+## Configuração opcional: provedor real via `docker-compose.override.yml`
+
+Por padrão o `docker-compose.yml` sempre aponta pro `smtp4dev` — nenhum e-mail sai da
+máquina. Para testar manualmente com um provedor real (ex.: Gmail), `SmtpSettings`
+ganhou `Username`, `Password` e `EnableStartTls` (todos vazios/`false` por padrão, sem
+efeito no comportamento existente), e `SmtpEmailSender` autentica quando `Username` não
+é vazio e usa `SecureSocketOptions.StartTls` quando `EnableStartTls` é `true`.
+
+O arquivo `docker-compose.override.yml.example` (comitado, sem segredo real) documenta
+os valores para Gmail; o usuário copia para `docker-compose.override.yml` (no
+`.gitignore`, nunca comitado) com sua própria senha de app. Isso é uma ferramenta de
+teste manual — o smtp4dev continua sendo o padrão documentado nos critérios de aceite
+desta spec.
+
 ## Fora de escopo desta etapa
 
 - **Templates de email reutilizáveis / engine de template** (Razor, Scriban, etc.).
 - **Outros tipos de email** (recuperação de senha, confirmação de conta) — só o
   welcome email desta etapa.
-- **Envio para provedor externo real em produção** (SendGrid, SES, etc.) — candidato a
-  v2; a configuração `Smtp:*` já deixa a porta aberta para trocar de provedor sem
-  mudar código.
+- **Provedor externo real como padrão de produção** (SendGrid, SES, etc.) — a
+  autenticação SMTP adicionada aqui é só para teste manual opcional (ver seção acima);
+  uma configuração de produção de verdade (secrets manager, retry de envio, etc.) fica
+  como candidato a v2.
 - **Confirmação de leitura / verificação de email (double opt-in)**.
 - **Retry/dead-letter queue customizados** para falha de envio — mesmo escopo já
   excluído em `03-messaging.md`.
