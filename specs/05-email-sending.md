@@ -108,15 +108,15 @@ smtp4dev na seção "Opção A".
 
 ## Critérios de aceite
 
-- [ ] Registrar um usuário via `POST /api/auth/register` resulta num email de
+- [x] Registrar um usuário via `POST /api/auth/register` resulta num email de
       boas-vindas capturado pelo smtp4dev, visível na UI web.
-- [ ] Falha simulada no envio (`FakeEmailSender` lança exceção) não impede o consumer
+- [x] Falha simulada no envio (`FakeEmailSender` lança exceção) não impede o consumer
       de processar a mensagem nem propaga exceção.
-- [ ] Teste automatizado cobrindo: consumer chama `IEmailSender.SendWelcomeEmailAsync`
+- [x] Teste automatizado cobrindo: consumer chama `IEmailSender.SendWelcomeEmailAsync`
       com os dados corretos após consumir o evento.
-- [ ] Teste automatizado cobrindo: falha no envio de email é engolida (não derruba o
+- [x] Teste automatizado cobrindo: falha no envio de email é engolida (não derruba o
       processamento da mensagem).
-- [ ] `docker compose up -d --build` sobe o `smtp4dev` junto com os demais serviços,
+- [x] `docker compose up -d --build` sobe o `smtp4dev` junto com os demais serviços,
       saudável.
-- [ ] Smoke test manual: registrar um usuário e ver o email correspondente na UI do
+- [x] Smoke test manual: registrar um usuário e ver o email correspondente na UI do
       smtp4dev (`http://localhost:5000`).
