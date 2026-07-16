@@ -73,8 +73,10 @@ smtp4dev:
 `Smtp__Port: "25"`, `Smtp__From: "noreply@securegate.dev"`.
 
 Para a Opção B do README (API local + infraestrutura via Docker), a porta externa
-`2525` entra em `appsettings.Development.json` (`Smtp:Host=localhost`,
-`Smtp:Port=2525`), mesmo padrão já usado hoje para Postgres/RabbitMQ nessa opção.
+`2525` entra em `appsettings.json` (`Smtp:Host=localhost`, `Smtp:Port=2525`), mesmo
+padrão já usado hoje para `RabbitMq:Host=localhost` nesse arquivo — o
+`docker-compose.yml` sobrescreve via variáveis de ambiente (`Smtp__Host=smtp4dev`,
+`Smtp__Port=25`) quando a API roda containerizada (Opção A).
 
 README ganha uma entrada na tabela de referência rápida e uma menção à UI do
 smtp4dev na seção "Opção A".
