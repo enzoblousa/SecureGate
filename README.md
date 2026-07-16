@@ -161,6 +161,68 @@ dotnet test        # backend — 58 testes
 cd web && npm test # frontend
 ```
 
+## 4. Rodando em produção
+
+**Status atual: não existe.** Tudo neste repositório (`docker-compose.yml`, secrets,
+build do Angular) é para desenvolvimento local. Não há pipeline de CI/CD, servidor de
+produção do frontend, nem gerenciamento de segredos — não é "rodar um comando e está
+no ar". Esta seção documenta o que precisaria mudar antes de um deploy real, não um
+passo a passo pronto.
+
+### 4.1 Segredos
+
+`docker-compose.yml` hoje tem `Jwt__Secret`, senha do Postgres (`postgres`/`postgres`)
+e credenciais do RabbitMQ (`guest`/`guest`) direto no arquivo — aceitável só porque são
+valores de dev, nunca usados fora da máquina local. Em produção nenhum desses pode
+ficar hardcoded nem versionado: usar variáveis de ambiente injetadas por um gerenciador
+de segredos (Azure Key Vault, AWS Secrets Manager, Docker/Kubernetes secrets), com um
+`Jwt__Secret` novo e forte (o atual está literalmente nomeado "não use em produção").
+
+### 4.2 HTTPS
+
+`Program.cs` chama `app.UseHttpsRedirection()`, mas nada termina TLS — o
+`Dockerfile` só expõe `http://+:8080` (dá pra confirmar pelo aviso nos logs: "Failed to
+determine the https port for redirect"). Precisa de um reverse proxy (nginx, Caddy,
+Traefik) ou um load balancer de nuvem fazendo terminação TLS na frente da API.
+
+### 4.3 Banco de dados e RabbitMQ
+
+Os containers `postgres` e `rabbitmq` do `docker-compose.yml` são para dev — sem
+backup, sem réplica, credenciais fracas. Em produção, usar um banco gerenciado (Azure
+Database for PostgreSQL, Amazon RDS) e um broker gerenciado (CloudAMQP, Amazon MQ) ou
+um cluster RabbitMQ operado com backup e monitoramento de verdade.
+
+### 4.4 Migrations
+
+`Program.cs` roda `dbContext.Database.Migrate()` automaticamente toda vez que a API
+sobe. Funciona para este projeto, mas com múltiplas réplicas rodando ao mesmo tempo
+isso pode gerar corrida entre instâncias tentando migrar simultaneamente. Em produção,
+o comum é rodar a migration como um passo de deploy separado (antes de subir as
+réplicas da API), não dentro do próprio processo da aplicação.
+
+### 4.5 Frontend
+
+Não existe hoje um jeito de servir o Angular em produção — só `ng serve` (dev). Seria
+necessário: `ng build` (gera `web/dist/`), e um servidor estático (nginx, Caddy, ou um
+host como Netlify/Vercel/S3+CloudFront) configurado para servir esses arquivos e fazer
+proxy de `/api/**` para a API — o mesmo papel que `proxy.conf.json` cumpre em dev.
+
+### 4.6 CORS / Hosts permitidos
+
+`"AllowedHosts": "*"` em `appsettings.json` só é seguro hoje porque frontend e API
+sempre conversam via proxy same-origin (dev) ou mesmo domínio. Se em produção o
+frontend for servido de um domínio diferente da API, é preciso restringir
+`AllowedHosts` e configurar uma política de CORS explícita.
+
+### 4.7 E-mail
+
+`Smtp:*` aponta pro `smtp4dev` local ([seção 3.4](#34-conferir-o-e-mail-de-boas-vindas-smtp4dev))
+— captura tudo localmente, não envia nada de verdade. Em produção, apontar para um
+provedor transacional de verdade (SendGrid, Amazon SES, Resend), com credenciais via
+gerenciador de segredos (mesmo ponto da seção 4.1) — os campos `Smtp__Username`,
+`Smtp__Password` e `Smtp__EnableStartTls` já existem pra isso, ver
+`docker-compose.override.yml.example`.
+
 ## Referência rápida
 
 | Comando | O que faz |
