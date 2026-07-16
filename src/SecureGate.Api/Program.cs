@@ -1,6 +1,7 @@
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using SecureGate.Api.Infrastructure.Email;
 using SecureGate.Api.Infrastructure.Messaging;
 using SecureGate.Api.Infrastructure.Persistence;
 using SecureGate.Api.Infrastructure.Security;
@@ -23,11 +24,13 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IPasswordHasher, BcryptPasswordHasher>();
 builder.Services.AddScoped<ITokenGenerator, JwtTokenGenerator>();
 builder.Services.AddScoped<IEventPublisher, MassTransitEventPublisher>();
+builder.Services.AddScoped<IEmailSender, SmtpEmailSender>();
 builder.Services.AddScoped<RegisterUserService>();
 builder.Services.AddScoped<LoginService>();
 
 builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection(JwtSettings.SectionName));
 builder.Services.Configure<RabbitMqSettings>(builder.Configuration.GetSection(RabbitMqSettings.SectionName));
+builder.Services.Configure<SmtpSettings>(builder.Configuration.GetSection(SmtpSettings.SectionName));
 
 builder.Services.AddMassTransit(x =>
 {
