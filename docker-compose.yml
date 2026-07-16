@@ -26,6 +26,12 @@ services:
       timeout: 5s
       retries: 10
 
+  smtp4dev:
+    image: rnwood/smtp4dev:latest
+    ports:
+      - "5000:80"
+      - "2525:25"
+
   api:
     build:
       context: .
@@ -38,11 +44,16 @@ services:
       RabbitMq__Host: "rabbitmq"
       RabbitMq__Username: "guest"
       RabbitMq__Password: "guest"
+      Smtp__Host: "smtp4dev"
+      Smtp__Port: "25"
+      Smtp__From: "noreply@securegate.dev"
     depends_on:
       postgres:
         condition: service_healthy
       rabbitmq:
         condition: service_healthy
+      smtp4dev:
+        condition: service_started
 
 volumes:
   postgres-data:
