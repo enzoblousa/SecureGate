@@ -86,6 +86,74 @@ cd web
 npm test
 ```
 
+## 3. Testando e verificando que está tudo funcionando
+
+Com backend (Opção A) e frontend rodando, nessa ordem:
+
+### 3.1 Health check rápido dos containers
+
+```bash
+docker compose ps
+```
+
+Espera-se `postgres`, `rabbitmq`, `smtp4dev` e `api` todos com status `Up` (os dois
+primeiros também `healthy`).
+
+### 3.2 Registro pela UI
+
+1. Abra `http://localhost:4200/register`
+2. Preencha nome, e-mail e senha (mínimo 8 caracteres) e envie
+3. Deve redirecionar para `/login` com a mensagem "Cadastro realizado!"
+4. Faça login com as mesmas credenciais — deve cair em `/home`
+
+### 3.3 Registro via linha de comando (sem UI)
+
+```bash
+curl -X POST http://localhost:8080/api/auth/register \
+  -H "Content-Type: application/json" \
+  -d "{\"name\":\"Teste\",\"email\":\"teste@example.com\",\"password\":\"senha1234\"}"
+```
+
+Espera-se `201 Created` com os dados do usuário (sem senha/hash).
+
+### 3.4 Conferir o e-mail de boas-vindas (smtp4dev)
+
+Abra `http://localhost:5000` — o e-mail "Bem-vindo(a) ao SecureGate" enviado para o
+endereço registrado deve aparecer na lista, capturado via SMTP real (nenhum e-mail sai
+para a internet, tudo fica local).
+
+### 3.5 Conferir o evento no RabbitMQ
+
+Abra `http://localhost:15672` (usuário/senha `guest`/`guest`) → aba **Queues** → fila
+`UserRegistered` — o gráfico de mensagens deve mostrar a publicação/consumo do evento
+a cada registro. RabbitMQ é só o broker: não tem UI de cadastro, isso fica no frontend
+Angular (`localhost:4200`).
+
+### 3.6 Ver os dados no banco (Postgres)
+
+```bash
+docker exec -it securegate-postgres-1 psql -U postgres -d securegate -c "SELECT \"Id\", \"Email\", \"Name\", \"CreatedAt\" FROM \"Users\" ORDER BY \"CreatedAt\" DESC LIMIT 10;"
+```
+
+Ou conecte com um cliente GUI (DBeaver, TablePlus, pgAdmin) em `localhost:5432`,
+banco `securegate`, usuário/senha `postgres`/`postgres`.
+
+### 3.7 Logs da API em tempo real
+
+```bash
+docker compose logs -f api
+```
+
+Ao registrar um usuário, deve aparecer a linha
+`E-mail de boas-vindas enviado para {email}` (sem `Falha ao enviar`).
+
+### 3.8 Suíte de testes automatizados
+
+```bash
+dotnet test        # backend — 58 testes
+cd web && npm test # frontend
+```
+
 ## Referência rápida
 
 | Comando | O que faz |
